@@ -1,0 +1,96 @@
+.dsa-sorting-experiment {
+  min-height: 100vh;
+  background-color: #1E293B;
+  color: #F8FAFC;
+  padding: 20px;
+}
+
+.section-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #0F172A;
+  border-radius: 8px;
+}
+
+.section-selector button {
+  padding: 10px 20px;
+  background-color: #334155;
+  color: #F8FAFC;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.section-selector button.active {
+  background-color: #38BDF8;
+}
+
+.visualization-section,
+.practice-section {
+  background-color: #0F172A;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h2 {
+  color: #38BDF8;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.algorithm-info {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #1E293B;
+  border-radius: 8px;
+}
+
+.algorithm-info h3 {
+  color: #38BDF8;
+  margin-bottom: 15px;
+}
+
+.algorithm-info table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #0F172A;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.algorithm-info th,
+.algorithm-info td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #334155;
+}
+
+.algorithm-info th {
+  background-color: #334155;
+  color: #38BDF8;
+  font-weight: 500;
+}
+
+.algorithm-info tr:nth-child(even) {
+  background-color: #1E293B;
+}
+
+.algorithm-info td:first-child {
+  font-weight: 500;
+  color: #38BDF8;
+}
+
+@media (max-width: 768px) {
+  .algorithm-info {
+    overflow-x: auto;
+  }
+  
+  .section-selector {
+    flex-direction: column;
+  }
+}

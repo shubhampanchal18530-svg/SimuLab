@@ -1,0 +1,48 @@
+.visualizer-container {
+  padding: 20px;
+  background: var(--panel);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.array-container {
+  height: 510px;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+.array-bar {
+  width: 8px;
+  margin: 0 1px;
+  background: linear-gradient(to top, var(--accent-blue), var(--accent-purple));
+  transition: height 0.1s ease;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.controls button:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-1px);
+}
+
+.controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

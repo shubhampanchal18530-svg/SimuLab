@@ -1,0 +1,103 @@
+import React, { useState } from 'react';
+import './SortingProblems.css';
+
+const SortingProblems = () => {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [currentProblem, setCurrentProblem] = useState(0);
+  const [score, setScore] = useState(0);
+
+  const problems = [
+    {
+      question: "What is the time complexity of Bubble Sort in the worst case?",
+      options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+      correctAnswer: 2,
+      explanation: "Bubble Sort has a time complexity of O(n²) in the worst case because it uses nested loops to compare adjacent elements."
+    },
+    {
+      question: "Which sorting algorithm is stable by default?",
+      options: ["Quick Sort", "Merge Sort", "Heap Sort", "Selection Sort"],
+      correctAnswer: 1,
+      explanation: "Merge Sort is stable by default because it preserves the relative order of equal elements during the merging process."
+    },
+    {
+      question: "What is the space complexity of Quick Sort?",
+      options: ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      correctAnswer: 1,
+      explanation: "Quick Sort has O(log n) space complexity due to the recursive call stack in the average case."
+    }
+  ];
+
+  const handleAnswerSelect = (index) => {
+    setSelectedAnswer(index);
+  };
+
+  const handleSubmit = () => {
+    if (selectedAnswer === problems[currentProblem].correctAnswer) {
+      setScore(score + 1);
+    }
+    setShowResult(true);
+  };
+
+  const handleNext = () => {
+    if (currentProblem < problems.length - 1) {
+      setCurrentProblem(currentProblem + 1);
+      setSelectedAnswer(null);
+      setShowResult(false);
+    }
+  };
+
+  return (
+    <div className="problems-container">
+      <div className="score">Score: {score}/{problems.length}</div>
+      
+      <div className="problem">
+        <h3>Problem {currentProblem + 1}</h3>
+        <p className="question">{problems[currentProblem].question}</p>
+        
+        <div className="options">
+          {problems[currentProblem].options.map((option, index) => (
+            <button
+              key={index}
+              className={`option ${selectedAnswer === index ? 'selected' : ''} 
+                ${showResult ? 
+                  (index === problems[currentProblem].correctAnswer ? 'correct' : 
+                   selectedAnswer === index ? 'incorrect' : '') 
+                : ''}`}
+              onClick={() => !showResult && handleAnswerSelect(index)}
+              disabled={showResult}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+
+        {!showResult ? (
+          <button 
+            className="submit-btn"
+            onClick={handleSubmit}
+            disabled={selectedAnswer === null}
+          >
+            Submit
+          </button>
+        ) : (
+          <>
+            <div className="explanation">
+              {problems[currentProblem].explanation}
+            </div>
+            {currentProblem < problems.length - 1 && (
+              <button 
+                className="next-btn"
+                onClick={handleNext}
+              >
+                Next Problem
+              </button>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SortingProblems;
