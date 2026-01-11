@@ -36,6 +36,10 @@ const QueryVisualizer = ({ schema, query }) => {
         .map(c => c.trim());
 
       let remaining = normalizedQuery.substring(fromIndex + 4);
+
+      // Extract table name (first token of remaining)
+      const tableNameMatch = remaining.trim().split(/\s+/)[0] || '';
+      parts.from = tableNameMatch.replace(/;$/, '').trim();
       
       // Parse WHERE
       const whereIndex = remaining.indexOf('where');
@@ -160,7 +164,7 @@ const QueryVisualizer = ({ schema, query }) => {
       </div>
 
       <div className="controls">
-        <button 
+        <button
           onClick={generateQueryPlan}
           disabled={executing}
           className="control-btn"

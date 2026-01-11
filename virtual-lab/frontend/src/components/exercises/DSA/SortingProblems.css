@@ -89,3 +89,21 @@
   color: var(--text);
   line-height: 1.6;
 }
+
+/* Code editor / textarea styling */
+.code-textarea {
+  width: 100%;
+  background: #ffffff; /* white box background */
+  color: #000000; /* ensure text is black for visibility */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
+  font-size: 0.95rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(15,23,42,0.08);
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.code-textarea::placeholder {
+  color: #6b7280;
+}

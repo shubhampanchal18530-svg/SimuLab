@@ -21,7 +21,8 @@ router.get('/', async (req, res) => {
 // Get single experiment by ID
 router.get('/:id', async (req, res) => {
   try {
-    const experiment = await Experiment.findById(req.id);
+    // Use req.params.id to access the route parameter
+    const experiment = await Experiment.findById(req.params.id);
     if (!experiment) {
       return res.status(404).json({ message: 'Experiment not found' });
     }

@@ -1,19 +1,37 @@
 import mongoose from "mongoose";
 import dns from 'dns';
 import { promisify } from 'util';
+import dotenv from 'dotenv';
+
+// Ensure environment variables from backend/.env are loaded when this module runs
+dotenv.config();
 
 const connectDB = async () => {
   try {
+    if (!process.env.MONGO_URI) {
+      throw new Error('MONGO_URI is not set in environment (.env)');
+    }
+
     // Parse MongoDB URI to get hostname
     const uri = new URL(process.env.MONGO_URI);
     const hostname = uri.hostname;
-    
-    // Check DNS resolution first
+
+    // Check DNS resolution first. For mongodb+srv URIs we must resolve SRV records.
     console.log('🔍 Verifying MongoDB DNS resolution...');
     try {
-      const lookup = promisify(dns.lookup);
-      const { address } = await lookup(hostname);
-      console.log(`✅ DNS Resolution successful: ${hostname} -> ${address}`);
+      if (process.env.MONGO_URI.startsWith('mongodb+srv://')) {
+        const resolveSrv = promisify(dns.resolveSrv);
+        const srvName = `_mongodb._tcp.${hostname}`;
+        const records = await resolveSrv(srvName);
+        if (!records || records.length === 0) {
+          throw new Error('No SRV records returned');
+        }
+        console.log(`✅ SRV Resolution successful: ${srvName} -> ${records.map(r => r.name + ':' + r.port).join(', ')}`);
+      } else {
+        const lookup = promisify(dns.lookup);
+        const { address } = await lookup(hostname);
+        console.log(`✅ DNS Resolution successful: ${hostname} -> ${address}`);
+      }
     } catch (dnsError) {
       console.error(`❌ DNS Resolution failed for ${hostname}:`, dnsError.message);
       throw new Error(`DNS lookup failed - check internet connection and MongoDB hostname`);
